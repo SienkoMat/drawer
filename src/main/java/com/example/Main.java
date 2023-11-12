@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public final class Main {
 
         randomBracket.setSizeOfBracket(choosenBracket.getSizeOfBracket());
         randomBracket.RandomSet();
-
+        randomBracket.getSet();
     }
 
 }
@@ -58,9 +59,8 @@ class Bracket {
 
     public void RandomSet() {
         for (int i = 0; i < sizeOfBracket; i++) {
-            System.out.println("Podaj " + (i + 1) + ". z " + sizeOfBracket + " liczb");
-            int tempInt = scanner.nextInt();
-            bracket.add(tempInt);
+            Random random = new Random();
+            bracket.add(random.nextInt(1, 9));
         }
     }
 
