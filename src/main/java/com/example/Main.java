@@ -5,7 +5,27 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
-public final class Main {
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public final class Main extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String count = request.getParameter("count");
+        String bound = request.getParameter("bound");
+        String numbers = request.getParameter("numbers");
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println(count + bound + numbers);
+
+    }
 
     public static void main(String[] args) {
 
@@ -13,7 +33,7 @@ public final class Main {
          * System.out.println("Jak się nazywasz?");
          * String user = scanner.nextLine();
          */
-
+        doPost(request, response);
         Bracket choosenBracket = new Bracket();
         Bracket randomBracket = new Bracket();
 
@@ -27,7 +47,7 @@ public final class Main {
         randomBracket.RandomSet();
         randomBracket.getSet();
 
-        choosenBracket.commonElements(randomBracket.bracket);
+        choosenBracket.commonElements(randomBracket);
 
     }
 
@@ -72,6 +92,10 @@ class Bracket {
     Set<Integer> bracket = new HashSet<Integer>(sizeOfBracket);
 
     public void ChooseSet() {
+        if (sizeOfBracket > upperBound) {
+            System.out.println("Wielkość koszyka nie może być większa niż górna granica.");
+            System.exit(0);
+        }
         for (int i = 0; i < sizeOfBracket; i++) {
             System.out.println(
                     "Podaj " + (i + 1) + ". z " + sizeOfBracket + " liczb w zakresie od 1 do " + upperBound + ".");
@@ -103,10 +127,11 @@ class Bracket {
         return bracket;
     }
 
-    public Set<Integer> commonElements(Set<Integer> bracket) {
+    public Set<Integer> commonElements(Bracket bracketToComp) {
         Set<Integer> commonBracket = new HashSet<Integer>(this.bracket);
-        commonBracket.retainAll(bracket);
-        System.out.println("Wspólne liczby z setu to: " + this.bracket);
+        commonBracket.retainAll(bracketToComp.bracket);
+        System.out.println("Wspólne liczby z obu koszyków to: " + commonBracket);
         return commonBracket;
     }
+
 }
