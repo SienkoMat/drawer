@@ -207,6 +207,7 @@ tags
 # Persistent undo
 [._]*.un~
 
+target/
 
 ### https://raw.github.com/github/gitignore/80a8803b004013d17291196825a327b9e871f009/Global/Xcode.gitignore
 
